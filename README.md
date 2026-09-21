@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simulador Didático de Sistemas Operacionais
 
 Simulador orientado a eventos discretos que modela, de forma didática, os
@@ -331,3 +332,6 @@ SimuladorSO/
 
 Detalhes de modelagem, formulário das métricas, resultados e limitações estão no
 relatório técnico em `relatorio/relatorio.pdf`.
+=======
+# Sistema_Operacional
+>>>>>>> 926bfcdc640a72ea28fec0812c5c6edc71f76357
