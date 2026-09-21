@@ -1,0 +1,7 @@
+=== Experimento 2: variacao de quantum no Round Robin (carga mista) ===
+RR quantum=1       | tf=101  | ret=75.75   | esp=33.75   | resp=1.25   | util=31.68%   | trocas=52  | faltas=20  | taxa=100.00%
+RR quantum=2       | tf=79   | ret=57.25   | esp=15.00   | resp=1.25   | util=40.51%   | trocas=30  | faltas=20  | taxa=100.00%
+RR quantum=4       | tf=78   | ret=56.25   | esp=13.50   | resp=1.25   | util=41.03%   | trocas=28  | faltas=20  | taxa=100.00%
+RR quantum=8       | tf=78   | ret=55.00   | esp=12.75   | resp=1.25   | util=41.03%   | trocas=27  | faltas=20  | taxa=100.00%
+RR quantum=16      | tf=78   | ret=55.00   | esp=12.75   | resp=1.25   | util=41.03%   | trocas=27  | faltas=20  | taxa=100.00%
+

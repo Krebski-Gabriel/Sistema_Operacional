@@ -1,0 +1,19 @@
+# Carga predominantemente limitada por CPU.
+# Surtos de CPU longos, poucas operacoes de E/S. Algumas referencias de memoria
+# exercitam a paginacao. Enderecos sao logicos (pagina = endereco / tamanho_pagina).
+config semente=7
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=10 refs=0,4,8,0,4,8,12
+  cpu dur=8  refs=12,0,4
+
+proc P2 chegada=0 prioridade=2
+thread T1
+  cpu dur=12 refs=16,20,24,16,20
+  cpu dur=6
+
+proc P3 chegada=3 prioridade=1
+thread T1
+  cpu dur=9 refs=28,32,28
+  cpu dur=5

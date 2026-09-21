@@ -1,0 +1,6 @@
+=== Experimento 1: FCFS vs Round Robin vs Prioridade (carga mista) ===
+FCFS               | tf=78   | ret=55.00   | esp=12.75   | resp=1.25   | util=41.03%   | trocas=27  | faltas=20  | taxa=100.00%
+RoundRobin q=4     | tf=78   | ret=56.25   | esp=13.50   | resp=1.25   | util=41.03%   | trocas=28  | faltas=20  | taxa=100.00%
+Prioridade (P)     | tf=92   | ret=56.75   | esp=14.75   | resp=1.25   | util=34.78%   | trocas=28  | faltas=20  | taxa=100.00%
+Prioridade (NP)    | tf=84   | ret=54.75   | esp=12.75   | resp=1.25   | util=38.10%   | trocas=27  | faltas=20  | taxa=100.00%
+

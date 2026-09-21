@@ -1,0 +1,4 @@
+=== Experimento 3b: escalonamento de disco FCFS vs SSTF vs SCAN (carga io_disco) ===
+Disco FCFS   | tf=43   | atendidas=5   | ocupado=40  | deslocamento_cabecote=510
+Disco SSTF   | tf=43   | atendidas=5   | ocupado=40  | deslocamento_cabecote=190
+Disco SCAN   | tf=43   | atendidas=5   | ocupado=40  | deslocamento_cabecote=190

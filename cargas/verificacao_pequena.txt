@@ -1,0 +1,14 @@
+# Carga pequena para conferencia manual (poucos eventos).
+# Duas threads, sem faltas de pagina (enderecos dentro de poucas paginas),
+# facil de tracar com FCFS e custo de troca zero.
+config semente=1
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=3
+  io dev=disco dur=4 pos=0
+  cpu dur=2
+
+proc P2 chegada=1 prioridade=2
+thread T1
+  cpu dur=4

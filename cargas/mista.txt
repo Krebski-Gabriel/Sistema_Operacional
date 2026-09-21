@@ -1,0 +1,35 @@
+# Carga mista: CPU, E/S bloqueante e nao bloqueante, faltas de pagina, um processo
+# com duas threads e operacoes sobre o sistema de arquivos.
+config semente=7
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=4 refs=0,4,8,12
+  fs criardir caminho=/dados
+  fs criararq caminho=/dados/log.txt
+  fs abrir caminho=/dados/log.txt handle=h1 modo=rw
+  fs escrever handle=h1 tam=800
+  cpu dur=3 refs=16,20
+  io dev=disco dur=6 pos=20
+  fs ler handle=h1 tam=300
+  fs fechar handle=h1
+  cpu dur=2
+thread T2
+  cpu dur=3 refs=100,104,108
+  io dev=console dur=4
+  cpu dur=3 refs=112,100
+
+proc P2 chegada=2 prioridade=2
+thread T1
+  cpu dur=5 refs=40,44,48,52,40
+  io dev=disco dur=6 pos=60 tipo=naobloqueante
+  cpu dur=4 refs=56,60
+  io dev=disco dur=6 pos=5
+  cpu dur=2
+
+proc P3 chegada=4 prioridade=1
+thread T1
+  cpu dur=3 refs=200,204
+  fs listar caminho=/
+  fs ler handle=inexistente tam=10
+  cpu dur=3

@@ -1,0 +1,11 @@
+# Carga sintetica para o estudo de substituicao de paginas.
+# Conjunto de trabalho fixo {pag 1, pag 2} reutilizado a cada ciclo, com uma
+# terceira pagina que sempre muda (3,4,5,6,7). Com 3 molduras e pagina de
+# tamanho 1 (endereco == numero da pagina), LRU preserva as paginas 1 e 2
+# (sempre as mais recentes) e so troca a moldura rotativa; FIFO, por ignorar
+# a reutilizacao, expulsa 1 e 2 periodicamente e sofre muito mais faltas.
+config semente=1
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=17 refs=1,2,3,1,2,4,1,2,5,1,2,6,1,2,7,1,2

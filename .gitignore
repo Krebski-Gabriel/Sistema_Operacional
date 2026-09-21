@@ -1,0 +1,14 @@
+# Artefatos de build .NET
+bin/
+obj/
+
+# Arquivos de usuario / IDE
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+
+# Saidas de execucao
+*.log
+saida.log

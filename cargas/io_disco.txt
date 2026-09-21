@@ -1,0 +1,33 @@
+# Carga sintetica para o estudo de escalonamento de disco.
+# Cinco processos chegam juntos; cada um executa um passo curto de CPU e emite
+# UMA requisicao de E/S bloqueante ao disco em posicoes espalhadas. Como o
+# tempo de servico do disco (8 u.t.) e alto frente ao passo de CPU (1 u.t.),
+# as requisicoes se acumulam na fila do disco ao mesmo tempo, permitindo que
+# SSTF e SCAN reordenem o atendimento e reduzam o deslocamento do cabecote.
+# Ordem de chegada das posicoes: 20, 190, 50, 160, 90 (cabecote inicia em 0).
+config semente=1
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=disco dur=8 pos=20
+
+proc P2 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=disco dur=8 pos=190
+
+proc P3 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=disco dur=8 pos=50
+
+proc P4 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=disco dur=8 pos=160
+
+proc P5 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=disco dur=8 pos=90

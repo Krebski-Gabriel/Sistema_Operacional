@@ -1,0 +1,33 @@
+
+================= METRICAS =================
+Tempo total simulado (clock)....... 92
+Processos concluidos............... 3
+Throughput (proc/u.t.)............. 0.0326
+Utilizacao da CPU (carga util)..... 34.78%
+Sobrecarga de troca de contexto.... 30.43% (28 u.t.)
+CPU ociosa......................... 34.78% (32 u.t.)
+Trocas de contexto................. 28
+Referencias a memoria.............. 20 (acertos=0, faltas=20)
+Taxa de faltas de pagina........... 100.00%
+Carregamentos / substituicoes...... 20 / 7
+
+--- Por thread ---
+Thread      Chegada      Fim  Retorno   Espera  Resposta
+1:T1              0       61       61       10         1
+1:T2              0       55       55       15         2
+2:T1              2       92       90       31         1
+3:T1              4       25       21        3         1
+MEDIA                           56.75    14.75      1.25
+
+--- Por processo ---
+Processo    Chegada      Fim  Retorno
+P1                0       61       61
+P2                2       92       90
+P3                4       25       21
+
+--- Dispositivos ---
+Dispositivo    Tipo       Politica  Atendidas  Ocupado  Utiliz.  Desloc.
+console        Caractere  FCFS              1        4    4.35%        0
+disco          Bloco      FCFS              3       18   19.57%      115
+===========================================
+

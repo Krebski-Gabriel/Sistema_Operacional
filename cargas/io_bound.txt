@@ -1,0 +1,31 @@
+# Carga predominantemente limitada por E/S.
+# Surtos de CPU curtos intercalados com E/S bloqueante frequente.
+config semente=7
+
+proc P1 chegada=0 prioridade=1
+thread T1
+  cpu dur=2
+  io dev=disco dur=6 pos=10
+  cpu dur=2
+  io dev=disco dur=6 pos=40
+  cpu dur=1
+  io dev=console dur=5
+  cpu dur=1
+
+proc P2 chegada=0 prioridade=1
+thread T1
+  cpu dur=1
+  io dev=console dur=5
+  cpu dur=2
+  io dev=disco dur=6 pos=5
+  cpu dur=1
+  io dev=disco dur=6 pos=35
+  cpu dur=1
+
+proc P3 chegada=1 prioridade=2
+thread T1
+  cpu dur=2
+  io dev=disco dur=6 pos=25
+  cpu dur=1
+  io dev=disco dur=6 pos=15
+  cpu dur=1

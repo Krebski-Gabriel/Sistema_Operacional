@@ -1,0 +1,6 @@
+=== Experimento 3a: substituicao FIFO vs LRU (carga padrao_memoria, pagina=1) ===
+FIFO molduras=3    | tf=95   | ret=95.00   | esp=12.00   | resp=1.00   | util=17.89%   | trocas=12  | faltas=11  | taxa=64.71%
+LRU  molduras=3    | tf=67   | ret=67.00   | esp=8.00    | resp=1.00   | util=25.37%   | trocas=8   | faltas=7   | taxa=41.18%
+FIFO molduras=4    | tf=81   | ret=81.00   | esp=10.00   | resp=1.00   | util=20.99%   | trocas=10  | faltas=9   | taxa=52.94%
+LRU  molduras=4    | tf=67   | ret=67.00   | esp=8.00    | resp=1.00   | util=25.37%   | trocas=8   | faltas=7   | taxa=41.18%
+

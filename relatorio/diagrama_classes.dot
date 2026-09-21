@@ -1,0 +1,93 @@
+digraph DiagramaClasses {
+    rankdir=LR;
+    graph [fontname="Helvetica", fontsize=11, ranksep=1.1, nodesep=0.4, splines=spline, bgcolor="white"];
+    node  [fontname="Helvetica", fontsize=10, shape=record, style="filled", fillcolor="#f4f7fa", color="#4a6178"];
+    edge  [fontname="Helvetica", fontsize=9, color="#4a6178"];
+
+    /* ===================== NUCLEO / ORQUESTRACAO ===================== */
+    Nucleo   [fillcolor="#1f3b57", fontcolor="white", label="{NucleoSimulacao|+ Clock : long\l|+ Executar() : ColetorMetricas\l- TentarDespachar()\l- ProcessarExecucaoCpu()\l- ProcessarOperacaoES()\l- ProcessarFimAtendimentoFalta()\l- ExecutarOperacaoArquivo()\l}"];
+    Fabrica  [label="{FabricaSimulador|+ Construir(cfg, carga, log)\l  : NucleoSimulacao\l}"];
+    Config   [label="{Configuracao|+ Escalonamento\l+ Quantum, CustoTrocaContexto\l+ TamanhoPagina, NumeroMolduras\l+ Substituicao, Semente ...\l}"];
+    Registrador [label="{RegistradorEventos|+ Registrar(clock, tipo, obj, desc)\l+ TotalLinhas : int\l}"];
+    Coletor  [label="{ColetorMetricas|+ UtilizacaoCpu, Throughput\l+ TaxaFaltas ...\l+ Finalizar(), RegistrarUsoCpu()\l}"];
+    Fila     [label="{FilaDeEventos|+ Enfileirar(IEvento)\l+ Desenfileirar() : IEvento\l}"];
+    IEvento  [fillcolor="#e6edf3", label="{«interface»\lIEvento|+ Tempo : long\l+ Sequencia : long\l+ Executar(NucleoSimulacao)\l}"];
+
+    /* ===================== ESCALONAMENTO DE CPU ===================== */
+    IEsc     [fillcolor="#e6edf3", label="{«interface»\lIEscalonador|+ Admitir(ThreadSimulada)\l+ Selecionar() : ThreadSimulada\l+ DevePreemptar(t) : bool\l}"];
+    Fcfs     [label="EscalonadorFcfs"];
+    Rr       [label="EscalonadorRoundRobin"];
+    Prio     [label="EscalonadorPrioridade"];
+
+    /* ===================== MEMORIA ===================== */
+    GerMem   [label="{GerenciadorMemoria|+ Acessar(tabela, end) : ResultadoAcesso\l+ TratarFalta(pid, tabela, end)\l+ LiberarProcesso(pid)\l}"];
+    ISub     [fillcolor="#e6edf3", label="{«interface»\lIPoliticaSubstituicao|+ AoCarregar(moldura)\l+ AoAcessar(moldura)\l+ EscolherVitima() : int\l}"];
+    Fifo     [label="SubstituicaoFifo"];
+    Lru      [label="SubstituicaoLru"];
+    TabPag   [label="{TabelaDePaginas|+ Obter(pagina)\l+ TemEntrada(pagina) : bool\l}"];
+
+    /* ===================== ENTRADA / SAIDA ===================== */
+    Disp     [label="{Dispositivo|+ Enfileirar(RequisicaoES)\l+ IniciarProxima() : RequisicaoES\l+ Concluir()\l+ TempoOcupado, Deslocamento\l}"];
+    IDisco   [fillcolor="#e6edf3", label="{«interface»\lIEscalonadorDisco|+ Selecionar(pendentes, pos)\l  : RequisicaoES\l}"];
+    DFcfs    [label="DiscoFcfs"];
+    DSstf    [label="DiscoSstf"];
+    DScan    [label="DiscoScan"];
+
+    /* ===================== ARQUIVOS ===================== */
+    SisArq   [label="{SistemaDeArquivos|+ CriarArquivo() / CriarDiretorio()\l+ Abrir() / Fechar()\l+ Ler() / Escrever()\l+ Remover() / Listar()\l}"];
+    No       [label="{No|+ Nome, Tipo, Tamanho\l+ Permissoes, Timestamps\l}"];
+    Descr    [label="{DescritorAberto|+ ModoEscrita : bool\l+ Posicao : long\l}"];
+
+    /* ===================== PROCESSOS / THREADS ===================== */
+    Processo [label="{Processo|+ Id : int\l+ Chegada : long\l+ TodasThreadsFinalizadas() : bool\l}"];
+    Thread   [label="{ThreadSimulada|+ Estado : EstadoThread\l+ OperacaoAtual : IOperacao\l+ Identificacao : string\l}"];
+    Pcb      [label="{Pcb|+ Prioridade\l+ EspacoEnderecamento : TabelaDePaginas\l+ ArquivosAbertos\l}"];
+    Tcb      [label="{Tcb|+ ContadorProgramaLogico\l+ Registradores[]\l+ PilhaLogica\l}"];
+    IOper    [fillcolor="#e6edf3", label="{«interface»\lIOperacao|+ Resumo() : string\l}"];
+    Surto    [label="SurtoCpu"];
+    OpES     [label="OperacaoES"];
+    OpArq    [label="OperacaoArquivo"];
+
+    /* ===================== CARGA ===================== */
+    Leitor   [label="{LeitorDeCarga|+ LerArquivo(caminho) : Carga\l+ LerTexto(texto) : Carga\l}"];
+    Carga    [label="{Carga|+ Processos\l+ Dispositivos\l+ Semente?\l}"];
+
+    /* ------------------ realizacoes de interface (linha tracejada, seta vazia) */
+    edge [style=dashed, arrowhead=onormal];
+    Fcfs -> IEsc;  Rr -> IEsc;  Prio -> IEsc;
+    Fifo -> ISub;  Lru -> ISub;
+    DFcfs -> IDisco;  DSstf -> IDisco;  DScan -> IDisco;
+    Surto -> IOper;  OpES -> IOper;  OpArq -> IOper;
+
+    /* ------------------ composicao (o todo e dono da parte: losango cheio) */
+    edge [style=solid, dir=back, arrowtail=diamond, arrowhead=none];
+    Nucleo -> Fila;
+    Processo -> Pcb;
+    Processo -> Thread;
+    Thread -> Tcb;
+    SisArq -> No;
+    Pcb -> TabPag;
+
+    /* ------------------ agregacao / associacao (losango vazio) */
+    edge [arrowtail=odiamond];
+    Nucleo -> IEsc;
+    Nucleo -> GerMem;
+    Nucleo -> SisArq;
+    Nucleo -> Disp;
+    Nucleo -> Coletor;
+    Nucleo -> Registrador;
+    Nucleo -> Processo;
+    Fila -> IEvento;
+    GerMem -> ISub;
+    Disp -> IDisco;
+    Thread -> IOper;
+    SisArq -> Descr;
+
+    /* ------------------ dependencia (uso pontual: tracejado, seta aberta) */
+    edge [dir=forward, style=dashed, arrowtail=none, arrowhead=vee];
+    Fabrica -> Nucleo [label="cria"];
+    Fabrica -> Carga  [label="usa"];
+    Fabrica -> Config [label="usa"];
+    Leitor  -> Carga  [label="produz"];
+    GerMem  -> TabPag [label="traduz"];
+}
